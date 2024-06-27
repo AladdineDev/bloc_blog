@@ -21,17 +21,18 @@ class MyApp extends StatelessWidget {
 }
 
 final _router = GoRouter(
+  initialLocation: PostListScreen.routePath,
   routes: [
     GoRoute(
-      path: '/',
+      path: PostListScreen.routePath,
       builder: (context, state) => const PostListScreen(),
     ),
     GoRoute(
-      path: '/post-form',
+      path: PostFormScreen.routePath,
       builder: (context, state) => const PostFormScreen(),
     ),
     GoRoute(
-      path: '/post-detail/:postId',
+      path: PostDetailScreen.routePath,
       builder: (context, state) {
         final postId = state.pathParameters['postId']!;
         return PostDetailScreen(postId: postId);

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PostFormScreen extends StatefulWidget {
+class PostFormScreen extends StatelessWidget {
   const PostFormScreen({super.key});
 
-  @override
-  State<PostFormScreen> createState() => _PostFormScreenState();
-}
+  static const routePath = '/post-form';
 
-class _PostFormScreenState extends State<PostFormScreen> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
