@@ -14,3 +14,11 @@ class UnknownException extends AppException {
           'Oops, something went wrong',
         );
 }
+
+class LoadPostsException extends AppException {
+  const LoadPostsException()
+      : super(
+          'load-posts-exception',
+          'Unable to load posts',
+        );
+}
