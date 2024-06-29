@@ -8,7 +8,8 @@ class PostDetailScreen extends StatelessWidget {
 
   final String postId;
 
-  static const routePath = '/post-detail/:postId';
+  static const routePath = '/post-detail/:$postIdPathParameter';
+  static const postIdPathParameter = 'postId';
 
   @override
   Widget build(BuildContext context) {
