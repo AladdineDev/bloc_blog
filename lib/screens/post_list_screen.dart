@@ -34,8 +34,11 @@ class PostListScreen extends StatelessWidget {
               );
             case PostStatus.success:
               if (state.posts.isEmpty) {
-                return const Center(
-                  child: Text("No posts at the moment"),
+                return Center(
+                  child: Text(
+                    "No posts at the moment",
+                    style: context.theme.textTheme.titleMedium,
+                  ),
                 );
               }
               return ListView.builder(
