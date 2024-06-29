@@ -6,16 +6,19 @@ class ErrorMessageText extends StatelessWidget {
     this.data, {
     super.key,
     this.textStyle,
+    this.alignment = Alignment.center,
   });
 
   final String data;
   final TextStyle? textStyle;
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
     final textColor = context.colorScheme.error;
     final textStyle = this.textStyle ?? context.theme.textTheme.titleMedium;
-    return Center(
+    return Align(
+      alignment: alignment,
       child: Text(
         data,
         textAlign: TextAlign.center,
