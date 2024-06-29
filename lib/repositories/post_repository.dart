@@ -8,12 +8,12 @@ class PostRepository {
   final PostDataSource remoteDataSource;
 
   Future<List<Post>> readPosts({
-    required int startIndex,
-    required int limit,
+    int start = 0,
+    int limit = 20,
   }) async {
     try {
       final posts = await remoteDataSource.readPosts(
-        startIndex: startIndex,
+        start: start,
         limit: limit,
       );
       return posts;
