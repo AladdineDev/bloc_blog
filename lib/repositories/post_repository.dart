@@ -7,15 +7,9 @@ class PostRepository {
 
   final PostDataSource remoteDataSource;
 
-  Future<List<Post>> readPosts({
-    int start = 0,
-    int limit = 20,
-  }) async {
+  Future<List<Post>> readPosts() async {
     try {
-      final posts = await remoteDataSource.readPosts(
-        start: start,
-        limit: limit,
-      );
+      final posts = await remoteDataSource.readPosts();
       return posts;
     } catch (e) {
       throw const LoadPostsException();
