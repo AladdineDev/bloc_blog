@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: BlocProvider(
         create: (context) => PostBloc(
           postRepository: context.postRepository,
-        )..add(FetchPost()),
+        )..add(GetAllPosts()),
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: GoRouter(

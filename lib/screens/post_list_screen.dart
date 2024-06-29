@@ -26,7 +26,7 @@ class PostListScreen extends StatelessWidget {
                   ErrorMessageText(state.error.message),
                   const SizedBox(height: 32),
                   ElevatedButton.icon(
-                    onPressed: () => context.postBloc.add(FetchPost()),
+                    onPressed: () => context.postBloc.add(GetAllPosts()),
                     icon: const Icon(Icons.refresh),
                     label: const Text("Retry"),
                   ),

@@ -9,12 +9,13 @@ part 'post_state.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc({required this.postRepository}) : super(const PostState()) {
-    on<FetchPost>(_onFetchPost);
+    on<GetAllPosts>(_onGetAllPosts);
   }
 
   final PostRepository postRepository;
 
-  Future<void> _onFetchPost(FetchPost event, Emitter<PostState> emit) async {
+  Future<void> _onGetAllPosts(
+      GetAllPosts event, Emitter<PostState> emit) async {
     emit(
       state.copyWith(
         status: PostStatus.loading,
