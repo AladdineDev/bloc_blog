@@ -49,6 +49,25 @@ class MyApp extends StatelessWidget {
               ),
             ],
           ),
+          theme: ThemeData(
+            listTileTheme: const ListTileThemeData(
+              titleTextStyle: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              subtitleTextStyle: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+            cardTheme: CardTheme(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
         ),
       ),
     );
