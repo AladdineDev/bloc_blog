@@ -1,4 +1,6 @@
+import 'package:blog/repositories/post_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension ThemeDataExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
@@ -17,4 +19,8 @@ extension NavigatorExtension on BuildContext {
   void pop() {
     if (_navigator.canPop()) _navigator.pop();
   }
+}
+
+extension BlocExtension on BuildContext {
+  PostRepository get postRepository => read<PostRepository>();
 }
