@@ -1,3 +1,4 @@
+import 'package:blog/bloc/post_bloc.dart';
 import 'package:blog/repositories/post_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,5 +31,6 @@ extension NavigatorExtension on BuildContext {
 }
 
 extension BlocExtension on BuildContext {
+  PostBloc get postBloc => read<PostBloc>();
   PostRepository get postRepository => read<PostRepository>();
 }
