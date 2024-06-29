@@ -2,19 +2,24 @@ import 'package:blog/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 
 class ErrorMessageText extends StatelessWidget {
-  const ErrorMessageText(this.text, {super.key});
+  const ErrorMessageText(
+    this.data, {
+    super.key,
+    this.textStyle,
+  });
 
-  final String text;
+  final String data;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
+    final textColor = context.colorScheme.error;
+    final textStyle = this.textStyle ?? context.theme.textTheme.titleMedium;
     return Center(
       child: Text(
-        text,
+        data,
         textAlign: TextAlign.center,
-        style: context.theme.textTheme.titleMedium?.copyWith(
-          color: context.colorScheme.error,
-        ),
+        style: textStyle?.copyWith(color: textColor),
       ),
     );
   }
