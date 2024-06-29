@@ -1,3 +1,5 @@
+import 'package:blog/extensions/build_context_extension.dart';
+import 'package:blog/models/post.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailScreen extends StatelessWidget {
@@ -8,8 +10,11 @@ class PostDetailScreen extends StatelessWidget {
 
   final String postId;
 
-  static const routePath = '/post-detail/:$postIdPathParameter';
-  static const postIdPathParameter = 'postId';
+  static const routePath = '/post-detail';
+
+  static void navigateTo(BuildContext context, Post post) {
+    context.pushNamed(routePath, arguments: post);
+  }
 
   @override
   Widget build(BuildContext context) {

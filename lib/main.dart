@@ -7,7 +7,6 @@ import 'package:blog/screens/post_form_screen.dart';
 import 'package:blog/screens/post_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,29 +25,26 @@ class MyApp extends StatelessWidget {
         create: (context) => PostBloc(
           postRepository: context.postRepository,
         )..add(GetAllPosts()),
-        child: MaterialApp.router(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          routerConfig: GoRouter(
-            initialLocation: PostListScreen.routePath,
-            routes: [
-              GoRoute(
-                path: PostListScreen.routePath,
-                builder: (context, state) => const PostListScreen(),
-              ),
-              GoRoute(
-                path: PostFormScreen.routePath,
-                builder: (context, state) => const PostFormScreen(),
-              ),
-              GoRoute(
-                path: PostDetailScreen.routePath,
-                builder: (context, state) {
-                  final postId = state
-                      .pathParameters[PostDetailScreen.postIdPathParameter]!;
-                  return PostDetailScreen(postId: postId);
-                },
-              ),
-            ],
-          ),
+          routes: {
+            PostListScreen.routePath: (context) => const PostListScreen(),
+            PostFormScreen.routePath: (context) => const PostFormScreen(),
+          },
+          onGenerateRoute: (settings) {
+            Widget content = const SizedBox.shrink();
+            switch (settings.name) {
+              case PostDetailScreen.routePath:
+                final arguments = settings.arguments;
+                if (arguments is String) {
+                  content = PostDetailScreen(postId: arguments);
+                }
+                break;
+            }
+            return MaterialPageRoute(
+              builder: (context) => content,
+            );
+          },
           theme: ThemeData(
             listTileTheme: const ListTileThemeData(
               titleTextStyle: TextStyle(
