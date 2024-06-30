@@ -21,6 +21,9 @@ class PostListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My notes'),
+      ),
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           return switch (state.status) {

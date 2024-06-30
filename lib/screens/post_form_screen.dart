@@ -18,7 +18,7 @@ class PostFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Post Form'),
+        title: const Text('New note'),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
@@ -36,9 +36,8 @@ class PostForm extends StatefulWidget {
 }
 
 class _PostFormState extends State<PostForm> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  bool isLoading = false; // Ajout du booléen pour suivre le chargement
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   @override
   void dispose() {
@@ -49,46 +48,67 @@ class _PostFormState extends State<PostForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        TextField(
-          controller: _titleController,
-          decoration: const InputDecoration(
-            labelText: 'Title',
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextField(
+            controller: _titleController,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.next,
+            decoration: const InputDecoration(
+              labelText: 'Title',
+            ),
           ),
-        ),
-        TextField(
-          controller: _descriptionController,
-          maxLines: 4,
-          decoration: const InputDecoration(
-            labelText: 'Description',
-          ),
-        ),
-        const SizedBox(height: 20),
-        BlocConsumer<PostBloc, PostState>(
-          listener: (context, state) {
-            if (state.status == PostStatus.createdPostWithSuccess) {
-              _showSnackBar(context, 'New post successfully created!');
-              context.pop();
-            } else if (state.status == PostStatus.createPostFailed) {
-              _showSnackBar(context, state.error.message);
-            }
-          },
-          builder: (context, state) {
-            return switch (state.status) {
-              PostStatus.creatingPost => const ElevatedButton(
-                  onPressed: null,
-                  child: Spinner(),
+          const SizedBox(height: 20),
+          TextField(
+            controller: _descriptionController,
+            maxLines: 10,
+            maxLength: 500,
+            buildCounter: (
+              context, {
+              required currentLength,
+              required isFocused,
+              required maxLength,
+            }) {
+              return Text(
+                "$currentLength/$maxLength",
+                style: context.textTheme.bodyMedium?.copyWith(
+                  color: currentLength == maxLength
+                      ? context.colorScheme.error
+                      : null,
                 ),
-              _ => ElevatedButton(
-                  onPressed: () => _onSubmit(context),
-                  child: const Text('Submit'),
-                )
-            };
-          },
-        ),
-      ],
+              );
+            },
+            decoration: const InputDecoration(
+              labelText: 'Description',
+            ),
+          ),
+          const SizedBox(height: 20),
+          BlocConsumer<PostBloc, PostState>(
+            listener: (context, state) {
+              if (state.status == PostStatus.createdPostWithSuccess) {
+                _showSnackBar(context, 'New post successfully created!');
+                context.pop();
+              } else if (state.status == PostStatus.createPostFailed) {
+                _showSnackBar(context, state.error.message);
+              }
+            },
+            builder: (context, state) {
+              return switch (state.status) {
+                PostStatus.creatingPost => const ElevatedButton(
+                    onPressed: null,
+                    child: Spinner(),
+                  ),
+                _ => ElevatedButton(
+                    onPressed: () => _onSubmit(context),
+                    child: const Text('Submit'),
+                  )
+              };
+            },
+          ),
+        ],
+      ),
     );
   }
 
