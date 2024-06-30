@@ -23,42 +23,42 @@ class PostListScreen extends StatelessWidget {
     return Scaffold(
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
-          switch (state.status) {
-            case PostStatus.fetchingPostList:
-              return const Spinner();
-            case PostStatus.fetchedPostListWithSuccess:
-              if (state.posts.isEmpty) {
-                return Center(
-                  child: Text(
-                    "No posts at the moment",
-                    style: context.theme.textTheme.titleMedium,
-                  ),
-                );
-              }
-              return ListView.builder(
-                itemCount: state.posts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final post = state.posts[index];
-                  return PostListItem(
-                    post: post,
-                    onTap: () => _onPostListItemTap(context, post: post),
-                  );
-                },
-              );
-            default:
-              return Center(
-                child: Retry(
-                  errorMessage: state.error.message,
-                  onPressed: () => context.postBloc.add(GetAllPosts()),
-                ),
-              );
-          }
+          return switch (state.status) {
+            PostStatus.fetchingPostList => const Spinner(),
+            PostStatus.fetchPostListFailed => Retry(
+                errorMessage: state.error.message,
+                onPressed: () => context.postBloc.add(GetAllPosts()),
+              ),
+            _ => _buildListView(context, posts: (state.posts)),
+          };
         },
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.post_add),
         onPressed: () => _onPostAddButtonTap(context),
       ),
+    );
+  }
+
+  Widget _buildListView(BuildContext context, {required List<Post> posts}) {
+    if (posts.isEmpty) {
+      return Center(
+        child: Text(
+          "No posts at the moment",
+          style: context.theme.textTheme.titleMedium,
+        ),
+      );
+    }
+    return ListView.builder(
+      itemCount: posts.length,
+      padding: const EdgeInsets.all(8),
+      itemBuilder: (BuildContext context, int index) {
+        final post = posts[index];
+        return PostListItem(
+          post: post,
+          onTap: () => _onPostListItemTap(context, post: post),
+        );
+      },
     );
   }
 
