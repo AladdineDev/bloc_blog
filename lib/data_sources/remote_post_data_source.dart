@@ -27,46 +27,30 @@ class RemotePostDataSource extends PostDataSource {
   Future<void> createPost({required Post post}) async {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
-    try {
-      _posts.add(post);
-    } catch (e) {
-      throw const CreatePostException();
-    }
+    _posts.add(post);
   }
 
   @override
   Future<List<Post>> getPosts() async {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
-    try {
-      return _posts;
-    } catch (e) {
-      throw const FetchPostsException();
-    }
+    return _posts;
   }
 
   @override
   Future<Post> getPost({required String postId}) async {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
-    try {
-      return _posts.firstWhere((post) => post.id == postId);
-    } catch (e) {
-      throw const FetchPostException();
-    }
+    return _posts.firstWhere((post) => post.id == postId);
   }
 
   @override
   Future<void> updatePost({required Post post}) async {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
-    try {
-      final postId = post.id;
-      if (postId == null) throw const UpdatePostException();
-      final index = _posts.indexWhere((p) => p.id == postId);
-      _posts[index] = post;
-    } catch (e) {
-      throw const UpdatePostException();
-    }
+    final postId = post.id;
+    if (postId == null) throw const UpdatePostException();
+    final index = _posts.indexWhere((p) => p.id == postId);
+    _posts[index] = post;
   }
 }

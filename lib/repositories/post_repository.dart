@@ -19,7 +19,7 @@ class PostRepository {
     try {
       return await remoteDataSource.getPosts();
     } catch (e) {
-      throw const FetchPostsException();
+      throw const FetchPostListException();
     }
   }
 
@@ -27,7 +27,7 @@ class PostRepository {
     try {
       return await remoteDataSource.getPost(postId: postId);
     } catch (e) {
-      throw const FetchPostsException();
+      throw const FetchPostException();
     }
   }
 
