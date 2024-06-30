@@ -23,18 +23,18 @@ class CreatePostException extends AppException {
         );
 }
 
-class ReadPostsException extends AppException {
-  const ReadPostsException()
+class FetchPostsException extends AppException {
+  const FetchPostsException()
       : super(
-          'read-posts-exception',
+          'fetch-posts-exception',
           'Unable to load posts',
         );
 }
 
-class ReadPostException extends AppException {
-  const ReadPostException()
+class FetchPostException extends AppException {
+  const FetchPostException()
       : super(
-          'read-post-exception',
+          'fetch-post-exception',
           'Unable to load this post',
         );
 }
