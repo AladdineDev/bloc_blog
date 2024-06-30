@@ -1,16 +1,22 @@
 import 'package:bloc_blog/bloc/post_bloc.dart';
 import 'package:bloc_blog/data_sources/remote_post_data_source.dart';
 import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/firebase_options.dart';
 import 'package:bloc_blog/models/post.dart';
 import 'package:bloc_blog/repositories/post_repository.dart';
 import 'package:bloc_blog/screens/page_not_found_screen.dart';
 import 'package:bloc_blog/screens/post_detail_screen.dart';
 import 'package:bloc_blog/screens/post_form_screen.dart';
 import 'package:bloc_blog/screens/post_list_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
