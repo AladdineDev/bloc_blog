@@ -101,8 +101,8 @@ class _PostFormState extends State<PostForm> {
                     child: Spinner(),
                   ),
                 _ => ElevatedButton(
-                    onPressed: () => _onSubmit(context),
-                    child: const Text('Submit'),
+                    onPressed: () => _onSave(context),
+                    child: const Text('Save'),
                   )
               };
             },
@@ -121,7 +121,7 @@ class _PostFormState extends State<PostForm> {
     );
   }
 
-  void _onSubmit(BuildContext context) {
+  void _onSave(BuildContext context) {
     final post = Post(
       id: "51",
       title: _titleController.text,
