@@ -36,12 +36,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<void> _onGetAllPosts(
-      GetAllPosts event, Emitter<PostState> emit) async {
-    emit(
-      state.copyWith(
-        status: PostStatus.fetchingPosts,
-      ),
-    );
+    GetAllPosts event,
+    Emitter<PostState> emit,
+  ) async {
+    emit(state.copyWith(status: PostStatus.fetchingPosts));
     try {
       final posts = await postRepository.getPosts();
       emit(
