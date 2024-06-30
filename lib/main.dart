@@ -2,6 +2,7 @@ import 'package:blog/bloc/post_bloc.dart';
 import 'package:blog/data_sources/remote_post_data_source.dart';
 import 'package:blog/extensions/build_context_extension.dart';
 import 'package:blog/repositories/post_repository.dart';
+import 'package:blog/screens/page_not_found_screen.dart';
 import 'package:blog/screens/post_detail_screen.dart';
 import 'package:blog/screens/post_form_screen.dart';
 import 'package:blog/screens/post_list_screen.dart';
@@ -32,17 +33,17 @@ class MyApp extends StatelessWidget {
             PostFormScreen.routePath: (context) => const PostFormScreen(),
           },
           onGenerateRoute: (settings) {
-            Widget content = const SizedBox.shrink();
+            Widget screen = const PageNotFoundScreen();
             switch (settings.name) {
               case PostDetailScreen.routePath:
                 final arguments = settings.arguments;
                 if (arguments is String) {
-                  content = PostDetailScreen(postId: arguments);
+                  screen = PostDetailScreen(postId: arguments);
                 }
                 break;
             }
             return MaterialPageRoute(
-              builder: (context) => content,
+              builder: (context) => screen,
             );
           },
           theme: ThemeData(
