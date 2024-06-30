@@ -7,7 +7,7 @@ class PostRepository {
 
   final PostDataSource remoteDataSource;
 
-  Future<void> createPost({required post}) async {
+  Future<void> createPost({required Post post}) async {
     try {
       await remoteDataSource.createPost(post: post);
     } catch (e) {
@@ -15,24 +15,23 @@ class PostRepository {
     }
   }
 
-  Future<List<Post>> readPosts() async {
+  Future<List<Post>> getPosts() async {
     try {
-      final posts = await remoteDataSource.readPosts();
-      return posts;
+      return await remoteDataSource.getPosts();
     } catch (e) {
       throw const ReadPostsException();
     }
   }
 
-  Future<Post> readPost({required postId}) async {
+  Future<Post> getPost({required String postId}) async {
     try {
-      return await remoteDataSource.readPost(postId: postId);
+      return await remoteDataSource.getPost(postId: postId);
     } catch (e) {
       throw const ReadPostsException();
     }
   }
 
-  Future<void> updatePost({required post}) async {
+  Future<void> updatePost({required Post post}) async {
     try {
       await remoteDataSource.updatePost(post: post);
     } catch (e) {

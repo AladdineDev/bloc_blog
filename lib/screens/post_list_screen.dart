@@ -22,22 +22,9 @@ class PostListScreen extends StatelessWidget {
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           switch (state.status) {
-            case PostStatus.loading:
+            case PostStatus.fetchingPost:
               return const Spinner();
-            case PostStatus.error:
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ErrorMessageText(state.error.message),
-                  const SizedBox(height: 32),
-                  ElevatedButton.icon(
-                    onPressed: () => context.postBloc.add(GetAllPosts()),
-                    icon: const Icon(Icons.refresh),
-                    label: const Text("Retry"),
-                  ),
-                ],
-              );
-            case PostStatus.success:
+            case PostStatus.fetchedPostWithSuccess:
               if (state.posts.isEmpty) {
                 return Center(
                   child: Text(
@@ -52,6 +39,19 @@ class PostListScreen extends StatelessWidget {
                   final post = state.posts[index];
                   return PostListItem(post: post);
                 },
+              );
+            default:
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ErrorMessageText(state.error.message),
+                  const SizedBox(height: 32),
+                  ElevatedButton.icon(
+                    onPressed: () => context.postBloc.add(GetAllPosts()),
+                    icon: const Icon(Icons.refresh),
+                    label: const Text("Retry"),
+                  ),
+                ],
               );
           }
         },

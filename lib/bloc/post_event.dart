@@ -10,8 +10,8 @@ final class GetOnePost extends PostEvent {
   final String postId;
 }
 
-final class AddPost extends PostEvent {
-  AddPost(this.post);
+final class CreatePost extends PostEvent {
+  CreatePost(this.post);
 
   final Post post;
 }

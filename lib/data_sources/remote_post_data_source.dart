@@ -10,7 +10,7 @@ class RemotePostDataSource extends PostDataSource {
   }
 
   @override
-  Future<List<Post>> readPosts() async {
+  Future<List<Post>> getPosts() async {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
     final posts = List.generate(100, (index) {
@@ -24,7 +24,7 @@ class RemotePostDataSource extends PostDataSource {
   }
 
   @override
-  Future<Post> readPost({required String postId}) async {
+  Future<Post> getPost({required String postId}) async {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
     throw UnimplementedError();
