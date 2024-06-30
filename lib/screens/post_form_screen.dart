@@ -6,17 +6,14 @@ import 'package:blog/models/post.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostFormScreen extends StatefulWidget {
-  const PostFormScreen({
-    super.key,
-    this.appBarTitle = const Text('New post'),
-  });
+  const PostFormScreen({super.key, this.post});
 
-  final Widget appBarTitle;
+  final Post? post;
 
   static const routePath = '/post-form';
 
-  static void navigateTo(BuildContext context) {
-    context.pushNamed(routePath);
+  static void navigateTo(BuildContext context, {Post? post}) {
+    context.pushNamed(routePath, arguments: post);
   }
 
   @override
@@ -25,18 +22,27 @@ class PostFormScreen extends StatefulWidget {
 
 class _PostFormScreenState extends State<PostFormScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
   bool _submitted = false;
-  String _title = '';
-  String _description = '';
+
+  @override
+  void initState() {
+    final post = widget.post;
+    _titleController.text = post?.title ?? '';
+    _descriptionController.text = post?.description ?? '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final post = widget.post;
     final autovalidateMode = _submitted
         ? AutovalidateMode.onUserInteraction
         : AutovalidateMode.disabled;
     return Scaffold(
       appBar: AppBar(
-        title: widget.appBarTitle,
+        title: Text(post == null ? "New post" : "Edit post"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -46,17 +52,21 @@ class _PostFormScreenState extends State<PostFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
+                controller: _titleController,
                 autovalidateMode: autovalidateMode,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   labelText: 'Title',
                 ),
-                onChanged: (text) => setState(() => _title = text),
+                onChanged: (text) {
+                  setState(() => _titleController.text = text);
+                },
                 validator: _isNotEmptyValidator,
               ),
               const SizedBox(height: 20),
               TextFormField(
+                controller: _descriptionController,
                 autovalidateMode: autovalidateMode,
                 keyboardType: TextInputType.text,
                 maxLines: 10,
@@ -65,28 +75,38 @@ class _PostFormScreenState extends State<PostFormScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Description',
                 ),
-                onChanged: (text) => setState(() => _description = text),
+                onChanged: (text) {
+                  setState(() => _descriptionController.text = text);
+                },
                 validator: _isNotEmptyValidator,
               ),
               const SizedBox(height: 20),
               BlocConsumer<PostBloc, PostState>(
                 listener: (context, state) {
-                  if (state.status == PostStatus.createdPostWithSuccess) {
-                    _showSnackBar(context, 'New post successfully created!');
-                    context.pop();
-                  } else if (state.status == PostStatus.createPostFailed) {
-                    _showSnackBar(context, state.error.message);
+                  switch (state.status) {
+                    case PostStatus.createdPostWithSuccess:
+                      _showSnackBar(context, 'New post created!');
+                      return context.pop();
+                    case PostStatus.updatedPostWithSuccess:
+                      _showSnackBar(context, 'Post updated!');
+                      return context.pop();
+                    case PostStatus.createPostFailed:
+                    case PostStatus.updatePostFailed:
+                      return _showSnackBar(context, state.error.message);
+                    default:
                   }
                 },
                 builder: (context, state) {
                   return switch (state.status) {
-                    PostStatus.creatingPost => const ElevatedButton(
+                    PostStatus.creatingPost ||
+                    PostStatus.updatingPost =>
+                      const ElevatedButton(
                         onPressed: null,
-                        child: Spinner(),
+                        child: Spinner.small(),
                       ),
                     _ => ElevatedButton(
                         onPressed: () => _onSubmit(context),
-                        child: const Text('Submit'),
+                        child: Text(post == null ? 'Submit' : 'Save'),
                       )
                   };
                 },
@@ -99,10 +119,10 @@ class _PostFormScreenState extends State<PostFormScreen> {
   }
 
   Widget? buildCounter(
-    context, {
-    required currentLength,
-    required isFocused,
-    required maxLength,
+    BuildContext context, {
+    required int currentLength,
+    required bool isFocused,
+    required int? maxLength,
   }) {
     return Text(
       "$currentLength/$maxLength",
@@ -113,6 +133,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
   }
 
   void _showSnackBar(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text),
@@ -124,12 +145,21 @@ class _PostFormScreenState extends State<PostFormScreen> {
     setState(() => _submitted = true);
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      final post = Post(
-        id: '50',
-        title: _title,
-        description: _description,
+      final post = widget.post;
+      if (post == null) {
+        final post = Post(
+          id: null,
+          title: _titleController.text,
+          description: _descriptionController.text,
+        );
+        return context.postBloc.add(CreatePost(post));
+      }
+      final updatedPost = post.copyWith(
+        id: post.id,
+        title: _titleController.text,
+        description: _descriptionController.text,
       );
-      context.postBloc.add(CreatePost(post));
+      return context.postBloc.add(UpdatePost(updatedPost));
     }
   }
 

@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: {
             PostListScreen.routePath: (context) => const PostListScreen(),
-            PostFormScreen.routePath: (context) => const PostFormScreen(),
           },
           onGenerateRoute: (settings) {
             Widget screen = const PageNotFoundScreen();
@@ -40,6 +39,12 @@ class MyApp extends StatelessWidget {
                 final arguments = settings.arguments;
                 if (arguments is Post) {
                   screen = PostDetailScreen(post: arguments);
+                }
+                break;
+              case PostFormScreen.routePath:
+                final arguments = settings.arguments;
+                if (arguments is Post?) {
+                  screen = PostFormScreen(post: arguments);
                 }
                 break;
             }

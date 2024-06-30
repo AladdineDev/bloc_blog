@@ -61,7 +61,9 @@ class RemotePostDataSource extends PostDataSource {
     //TODO: remove delay
     await Future.delayed(const Duration(milliseconds: 500));
     try {
-      final index = _posts.indexWhere((p) => p.id == post.id);
+      final postId = post.id;
+      if (postId == null) throw const UpdatePostException();
+      final index = _posts.indexWhere((p) => p.id == postId);
       _posts[index] = post;
     } catch (e) {
       throw const UpdatePostException();

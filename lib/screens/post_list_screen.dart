@@ -26,7 +26,7 @@ class PostListScreen extends StatelessWidget {
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           return switch (state.status) {
-            PostStatus.fetchingPostList => const Spinner(),
+            PostStatus.fetchingPostList => const Spinner.medium(),
             PostStatus.fetchPostListFailed => Retry(
                 errorMessage: state.error.message,
                 onPressed: () => context.postBloc.add(GetAllPosts()),
@@ -35,8 +35,9 @@ class PostListScreen extends StatelessWidget {
           };
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.post_add),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.post_add),
+        label: const Text("New post"),
         onPressed: () => _onPostAddButtonTap(context),
       ),
     );
