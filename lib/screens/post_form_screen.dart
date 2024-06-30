@@ -6,7 +6,12 @@ import 'package:blog/models/post.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostFormScreen extends StatefulWidget {
-  const PostFormScreen({super.key});
+  const PostFormScreen({
+    super.key,
+    this.appBarTitle = const Text('New post'),
+  });
+
+  final Widget appBarTitle;
 
   static const routePath = '/post-form';
 
@@ -31,7 +36,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
         : AutovalidateMode.disabled;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New post'),
+        title: widget.appBarTitle,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -47,9 +52,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Title',
                 ),
-                onChanged: (text) {
-                  setState(() => _title = text);
-                },
+                onChanged: (text) => setState(() => _title = text),
                 validator: _isNotEmptyValidator,
               ),
               const SizedBox(height: 20),
@@ -58,27 +61,11 @@ class _PostFormScreenState extends State<PostFormScreen> {
                 keyboardType: TextInputType.text,
                 maxLines: 10,
                 maxLength: 300,
-                buildCounter: (
-                  context, {
-                  required currentLength,
-                  required isFocused,
-                  required maxLength,
-                }) {
-                  return Text(
-                    "$currentLength/$maxLength",
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      color: currentLength == maxLength
-                          ? context.colorScheme.error
-                          : null,
-                    ),
-                  );
-                },
+                buildCounter: buildCounter,
                 decoration: const InputDecoration(
                   labelText: 'Description',
                 ),
-                onChanged: (text) {
-                  setState(() => _description = text);
-                },
+                onChanged: (text) => setState(() => _description = text),
                 validator: _isNotEmptyValidator,
               ),
               const SizedBox(height: 20),
@@ -111,6 +98,20 @@ class _PostFormScreenState extends State<PostFormScreen> {
     );
   }
 
+  Widget? buildCounter(
+    context, {
+    required currentLength,
+    required isFocused,
+    required maxLength,
+  }) {
+    return Text(
+      "$currentLength/$maxLength",
+      style: context.textTheme.bodyMedium?.copyWith(
+        color: currentLength == maxLength ? context.colorScheme.error : null,
+      ),
+    );
+  }
+
   void _showSnackBar(BuildContext context, String text) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -124,7 +125,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final post = Post(
-        id: "51",
+        id: '50',
         title: _title,
         description: _description,
       );
