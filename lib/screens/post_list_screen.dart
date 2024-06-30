@@ -3,8 +3,8 @@ import 'package:blog/extensions/build_context_extension.dart';
 import 'package:blog/models/post.dart';
 import 'package:blog/screens/post_detail_screen.dart';
 import 'package:blog/screens/post_form_screen.dart';
-import 'package:blog/widgets/error_message_text.dart';
 import 'package:blog/widgets/post_list_item.dart';
+import 'package:blog/widgets/retry.dart';
 import 'package:blog/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,9 +24,9 @@ class PostListScreen extends StatelessWidget {
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           switch (state.status) {
-            case PostStatus.fetchingPost:
+            case PostStatus.fetchingPostList:
               return const Spinner();
-            case PostStatus.fetchedPostWithSuccess:
+            case PostStatus.fetchedPostListWithSuccess:
               if (state.posts.isEmpty) {
                 return Center(
                   child: Text(
@@ -46,17 +46,11 @@ class PostListScreen extends StatelessWidget {
                 },
               );
             default:
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ErrorMessageText(state.error.message),
-                  const SizedBox(height: 32),
-                  ElevatedButton.icon(
-                    onPressed: () => context.postBloc.add(GetAllPosts()),
-                    icon: const Icon(Icons.refresh),
-                    label: const Text("Retry"),
-                  ),
-                ],
+              return Center(
+                child: Retry(
+                  errorMessage: state.error.message,
+                  onPressed: () => context.postBloc.add(GetAllPosts()),
+                ),
               );
           }
         },

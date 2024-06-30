@@ -39,19 +39,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     GetAllPosts event,
     Emitter<PostState> emit,
   ) async {
-    emit(state.copyWith(status: PostStatus.fetchingPosts));
+    emit(state.copyWith(status: PostStatus.fetchingPostList));
     try {
       final posts = await postRepository.getPosts();
       emit(
         state.copyWith(
-          status: PostStatus.fetchedPostsWithSuccess,
+          status: PostStatus.fetchedPostListWithSuccess,
           posts: posts,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.fetchPostsFailed,
+          status: PostStatus.fetchPostListFailed,
           error: const UnknownException(),
         ),
       );
