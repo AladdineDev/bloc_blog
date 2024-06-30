@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class PostDetailScreen extends StatelessWidget {
   const PostDetailScreen({
     super.key,
-    required this.postId,
+    required this.post,
   });
 
-  final String postId;
+  final Post post;
 
   static const routePath = '/post-detail';
 

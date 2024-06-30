@@ -1,6 +1,7 @@
 import 'package:blog/bloc/post_bloc.dart';
 import 'package:blog/data_sources/remote_post_data_source.dart';
 import 'package:blog/extensions/build_context_extension.dart';
+import 'package:blog/models/post.dart';
 import 'package:blog/repositories/post_repository.dart';
 import 'package:blog/screens/page_not_found_screen.dart';
 import 'package:blog/screens/post_detail_screen.dart';
@@ -37,8 +38,8 @@ class MyApp extends StatelessWidget {
             switch (settings.name) {
               case PostDetailScreen.routePath:
                 final arguments = settings.arguments;
-                if (arguments is String) {
-                  screen = PostDetailScreen(postId: arguments);
+                if (arguments is Post) {
+                  screen = PostDetailScreen(post: arguments);
                 }
                 break;
             }
