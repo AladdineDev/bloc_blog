@@ -11,7 +11,7 @@ class PostRepository {
     try {
       await remoteDataSource.createPost(post: post);
     } catch (e) {
-      throw const UpdatePostException();
+      throw const CreatePostException();
     }
   }
 
