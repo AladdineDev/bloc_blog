@@ -1,10 +1,10 @@
-import 'package:blog/bloc/post_bloc.dart';
-import 'package:blog/extensions/build_context_extension.dart';
-import 'package:blog/models/post.dart';
-import 'package:blog/screens/post_form_screen.dart';
-import 'package:blog/widgets/post_list_view.dart';
-import 'package:blog/widgets/retry.dart';
-import 'package:blog/widgets/spinner.dart';
+import 'package:bloc_blog/bloc/post_bloc.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/models/post.dart';
+import 'package:bloc_blog/screens/post_form_screen.dart';
+import 'package:bloc_blog/widgets/post_list_view.dart';
+import 'package:bloc_blog/widgets/retry.dart';
+import 'package:bloc_blog/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,4 +1,4 @@
-import 'package:blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
 
 class ErrorMessageText extends StatelessWidget {

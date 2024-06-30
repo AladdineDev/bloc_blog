@@ -1,4 +1,4 @@
-import 'package:blog/widgets/error_message_text.dart';
+import 'package:bloc_blog/widgets/error_message_text.dart';
 import 'package:flutter/material.dart';
 
 class Retry extends StatelessWidget {

@@ -1,7 +1,7 @@
-import 'package:blog/widgets/post_list_item.dart';
+import 'package:bloc_blog/widgets/post_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:blog/models/post.dart';
-import 'package:blog/screens/post_detail_screen.dart';
+import 'package:bloc_blog/models/post.dart';
+import 'package:bloc_blog/screens/post_detail_screen.dart';
 
 class PostListView extends StatelessWidget {
   const PostListView({super.key, required this.posts});

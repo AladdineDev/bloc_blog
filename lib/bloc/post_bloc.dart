@@ -1,6 +1,6 @@
-import 'package:blog/exceptions/app_exception.dart';
-import 'package:blog/models/post.dart';
-import 'package:blog/repositories/post_repository.dart';
+import 'package:bloc_blog/exceptions/app_exception.dart';
+import 'package:bloc_blog/models/post.dart';
+import 'package:bloc_blog/repositories/post_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

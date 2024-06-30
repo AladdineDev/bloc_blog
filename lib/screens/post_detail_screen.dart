@@ -1,6 +1,6 @@
-import 'package:blog/extensions/build_context_extension.dart';
-import 'package:blog/models/post.dart';
-import 'package:blog/screens/post_form_screen.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/models/post.dart';
+import 'package:bloc_blog/screens/post_form_screen.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailScreen extends StatelessWidget {

@@ -1,7 +1,7 @@
-import 'package:blog/extensions/build_context_extension.dart';
-import 'package:blog/widgets/post_form.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/widgets/post_form.dart';
 import 'package:flutter/material.dart';
-import 'package:blog/models/post.dart';
+import 'package:bloc_blog/models/post.dart';
 
 class PostFormScreen extends StatefulWidget {
   const PostFormScreen({super.key, this.post});

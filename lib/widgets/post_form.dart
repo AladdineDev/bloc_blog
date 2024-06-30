@@ -1,8 +1,8 @@
-import 'package:blog/extensions/build_context_extension.dart';
-import 'package:blog/widgets/spinner.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/widgets/spinner.dart';
 import 'package:flutter/material.dart';
-import 'package:blog/bloc/post_bloc.dart';
-import 'package:blog/models/post.dart';
+import 'package:bloc_blog/bloc/post_bloc.dart';
+import 'package:bloc_blog/models/post.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostForm extends StatefulWidget {

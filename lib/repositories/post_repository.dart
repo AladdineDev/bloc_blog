@@ -1,6 +1,6 @@
-import 'package:blog/data_sources/post_data_source.dart';
-import 'package:blog/exceptions/app_exception.dart';
-import 'package:blog/models/post.dart';
+import 'package:bloc_blog/data_sources/post_data_source.dart';
+import 'package:bloc_blog/exceptions/app_exception.dart';
+import 'package:bloc_blog/models/post.dart';
 
 class PostRepository {
   PostRepository({required this.remoteDataSource});

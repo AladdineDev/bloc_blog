@@ -1,5 +1,5 @@
-import 'package:blog/extensions/build_context_extension.dart';
-import 'package:blog/widgets/error_message_text.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/widgets/error_message_text.dart';
 import 'package:flutter/material.dart';
 
 class PageNotFoundScreen extends StatelessWidget {

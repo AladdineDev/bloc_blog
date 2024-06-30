@@ -1,4 +1,4 @@
-import 'package:blog/models/post.dart';
+import 'package:bloc_blog/models/post.dart';
 
 abstract class PostDataSource {
   Future<void> createPost({required Post post});
