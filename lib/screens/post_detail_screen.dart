@@ -12,7 +12,7 @@ class PostDetailScreen extends StatelessWidget {
 
   static const routePath = '/post-detail';
 
-  static void navigateTo(BuildContext context, Post post) {
+  static void navigateTo(BuildContext context, {required Post post}) {
     context.pushNamed(routePath, arguments: post);
   }
 

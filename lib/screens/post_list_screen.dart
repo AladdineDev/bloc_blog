@@ -1,5 +1,7 @@
 import 'package:blog/bloc/post_bloc.dart';
 import 'package:blog/extensions/build_context_extension.dart';
+import 'package:blog/models/post.dart';
+import 'package:blog/screens/post_detail_screen.dart';
 import 'package:blog/screens/post_form_screen.dart';
 import 'package:blog/widgets/error_message_text.dart';
 import 'package:blog/widgets/post_list_item.dart';
@@ -37,7 +39,10 @@ class PostListScreen extends StatelessWidget {
                 itemCount: state.posts.length,
                 itemBuilder: (BuildContext context, int index) {
                   final post = state.posts[index];
-                  return PostListItem(post: post);
+                  return PostListItem(
+                    post: post,
+                    onTap: () => _onPostListItemTap(context, post: post),
+                  );
                 },
               );
             default:
@@ -58,12 +63,16 @@ class PostListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.post_add),
-        onPressed: () => _onFloatingActionButtonTap(context),
+        onPressed: () => _onPostAddButtonTap(context),
       ),
     );
   }
 
-  void _onFloatingActionButtonTap(BuildContext context) {
+  void _onPostAddButtonTap(BuildContext context) {
     PostFormScreen.navigateTo(context);
+  }
+
+  void _onPostListItemTap(BuildContext context, {required Post post}) {
+    PostDetailScreen.navigateTo(context, post: post);
   }
 }

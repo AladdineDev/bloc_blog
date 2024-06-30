@@ -1,4 +1,3 @@
-import 'package:blog/extensions/build_context_extension.dart';
 import 'package:blog/models/post.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +5,11 @@ class PostListItem extends StatelessWidget {
   const PostListItem({
     super.key,
     required this.post,
+    this.onTap,
   });
 
   final Post post;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +20,7 @@ class PostListItem extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: borderRadius,
-        onTap: () {
-          //TODO: implement this method
-        },
+        onTap: onTap,
         child: ListTile(
           title: Text(
             post.title ?? "No title",
