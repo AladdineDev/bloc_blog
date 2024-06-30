@@ -63,6 +63,7 @@ class _PostFormState extends State<PostForm> {
           const SizedBox(height: 20),
           TextField(
             controller: _descriptionController,
+            keyboardType: TextInputType.text,
             maxLines: 10,
             maxLength: 300,
             buildCounter: (
