@@ -22,7 +22,7 @@ class PostListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My notes'),
+        title: const Text('My posts'),
       ),
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {

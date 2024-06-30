@@ -18,7 +18,7 @@ class PostFormScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New note'),
+        title: const Text('New post'),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
@@ -101,8 +101,8 @@ class _PostFormState extends State<PostForm> {
                     child: Spinner(),
                   ),
                 _ => ElevatedButton(
-                    onPressed: () => _onSave(context),
-                    child: const Text('Save'),
+                    onPressed: () => _onSubmit(context),
+                    child: const Text('Submit'),
                   )
               };
             },
@@ -121,7 +121,7 @@ class _PostFormState extends State<PostForm> {
     );
   }
 
-  void _onSave(BuildContext context) {
+  void _onSubmit(BuildContext context) {
     final post = Post(
       id: "51",
       title: _titleController.text,
