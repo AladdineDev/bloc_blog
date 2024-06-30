@@ -107,6 +107,7 @@ class _PostFormState extends State<PostForm> {
               };
             },
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
