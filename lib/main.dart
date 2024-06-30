@@ -65,6 +65,9 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
+            inputDecorationTheme: const InputDecorationTheme(
+              border: OutlineInputBorder(),
+            ),
           ),
         ),
       ),
