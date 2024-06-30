@@ -64,7 +64,7 @@ class _PostFormState extends State<PostForm> {
           TextField(
             controller: _descriptionController,
             maxLines: 10,
-            maxLength: 500,
+            maxLength: 300,
             buildCounter: (
               context, {
               required currentLength,
