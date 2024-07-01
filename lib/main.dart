@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           postRepository: context.postRepository,
         )..add(GetAllPosts()),
         child: MaterialApp(
+          title: "Bloc Blog",
           debugShowCheckedModeBanner: false,
           routes: {
             PostListScreen.routePath: (context) => const PostListScreen(),
