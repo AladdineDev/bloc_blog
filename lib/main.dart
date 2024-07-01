@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
             switch (settings.name) {
               case PostDetailScreen.routePath:
                 final arguments = settings.arguments;
-                if (arguments is Post) {
-                  screen = PostDetailScreen(post: arguments);
+                if (arguments is PostId) {
+                  screen = PostDetailScreen(postId: arguments);
                 }
                 break;
               case PostFormScreen.routePath:
@@ -55,9 +55,7 @@ class MyApp extends StatelessWidget {
                 }
                 break;
             }
-            return MaterialPageRoute(
-              builder: (context) => screen,
-            );
+            return MaterialPageRoute(builder: (context) => screen);
           },
           theme: ThemeData(
             listTileTheme: const ListTileThemeData(

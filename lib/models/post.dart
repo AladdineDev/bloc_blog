@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+typedef PostId = String;
+
 class Post extends Equatable {
   const Post({
     required this.id,
@@ -7,14 +9,14 @@ class Post extends Equatable {
     required this.description,
   });
 
-  final String? id;
+  final PostId? id;
   final String? title;
   final String? description;
 
   @override
   List<Object?> get props => [id, title, description];
 
-  factory Post.fromJson(String id, Map<String, dynamic> json) {
+  factory Post.fromJson(PostId id, Map<String, dynamic> json) {
     return Post(
       id: id,
       title: json['title'],
@@ -31,7 +33,7 @@ class Post extends Equatable {
   }
 
   Post copyWith({
-    String? id,
+    PostId? id,
     String? title,
     String? description,
   }) {

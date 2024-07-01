@@ -7,6 +7,10 @@ class PageNotFoundScreen extends StatelessWidget {
 
   static const routePath = '/not-found';
 
+  static void navigateTo(BuildContext context) {
+    context.pushNamed(routePath);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

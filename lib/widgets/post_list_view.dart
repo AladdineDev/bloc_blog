@@ -1,3 +1,6 @@
+import 'package:bloc_blog/bloc/post_bloc.dart';
+import 'package:bloc_blog/extensions/build_context_extension.dart';
+import 'package:bloc_blog/screens/page_not_found_screen.dart';
 import 'package:bloc_blog/widgets/post_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_blog/models/post.dart';
@@ -23,6 +26,9 @@ class PostListView extends StatelessWidget {
   }
 
   void _onPostListItemTap(BuildContext context, {required Post post}) {
-    PostDetailScreen.navigateTo(context, post: post);
+    final postId = post.id;
+    if (postId == null) return PageNotFoundScreen.navigateTo(context);
+    context.postBloc.add(GetOnePost(postId));
+    PostDetailScreen.navigateTo(context, postId: postId);
   }
 }

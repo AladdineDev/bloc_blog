@@ -7,7 +7,7 @@ final class GetAllPosts extends PostEvent {}
 final class GetOnePost extends PostEvent {
   GetOnePost(this.postId);
 
-  final String postId;
+  final PostId postId;
 }
 
 final class CreatePost extends PostEvent {
