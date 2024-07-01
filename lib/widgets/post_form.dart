@@ -126,18 +126,20 @@ class _PostFormState extends State<PostForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       final post = widget.post;
+      final title = _titleController.text.trim();
+      final description = _descriptionController.text.trim();
       if (post == null) {
         final post = Post(
           id: null,
-          title: _titleController.text,
-          description: _descriptionController.text,
+          title: title,
+          description: description,
         );
         return context.postBloc.add(CreatePost(post));
       }
       final updatedPost = post.copyWith(
         id: post.id,
-        title: _titleController.text,
-        description: _descriptionController.text,
+        title: title,
+        description: description,
       );
       return context.postBloc.add(UpdatePost(updatedPost));
     }
