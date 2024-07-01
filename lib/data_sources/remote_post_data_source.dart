@@ -1,4 +1,5 @@
 import 'package:bloc_blog/data_sources/post_data_source.dart';
+import 'package:bloc_blog/extensions/firebase_firestore_extension.dart';
 import 'package:bloc_blog/models/post.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,30 +8,20 @@ class RemotePostDataSource extends PostDataSource {
 
   final FirebaseFirestore _firestore;
 
-  static const postsPath = 'posts';
-  static String postPath({required String postId}) => '$postsPath/$postId';
+  static const postsCollectionPath = 'posts';
+  static String postPath({required String postId}) {
+    return '$postsCollectionPath/$postId';
+  }
 
   @override
   Future<void> createPost({required Post post}) async {
-    final rawPostsCollection = _firestore.collection(postsPath);
-    final postsCollection =
-        rawPostsCollection.withConverter(fromFirestore: (snapshot, _) {
-      return Post.fromJson(snapshot.id, snapshot.data()!);
-    }, toFirestore: (post, _) {
-      return post.toJson()..remove("id");
-    });
+    final postsCollection = _firestore.postsCollection();
     await postsCollection.add(post);
   }
 
   @override
   Stream<List<Post>> getPosts() {
-    final rawPostsCollection = _firestore.collection(postsPath);
-    final postsCollection =
-        rawPostsCollection.withConverter(fromFirestore: (snapshot, _) {
-      return Post.fromJson(snapshot.id, snapshot.data()!);
-    }, toFirestore: (post, _) {
-      return post.toJson();
-    });
+    final postsCollection = _firestore.postsCollection();
     return postsCollection.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => doc.data()).toList();
     });
@@ -38,29 +29,16 @@ class RemotePostDataSource extends PostDataSource {
 
   @override
   Stream<Post> getPost({required String postId}) {
-    final rawPostDoc = _firestore.doc(postPath(postId: postId));
-    final postDoc = rawPostDoc.withConverter(
-      fromFirestore: (snapshot, _) {
-        return Post.fromJson(snapshot.id, snapshot.data()!);
-      },
-      toFirestore: (post, _) {
-        return post.toJson();
-      },
+    final postDoc = _firestore.postDocument(
+      documentPath: postPath(postId: postId),
     );
     return postDoc.snapshots().map((snapshot) => snapshot.data()!);
   }
 
   @override
   Future<void> updatePost({required Post post}) async {
-    final postId = post.id!;
-    final rawPostDoc = _firestore.doc(postPath(postId: postId));
-    final postDoc = rawPostDoc.withConverter(
-      fromFirestore: (snapshot, _) {
-        return Post.fromJson(snapshot.id, snapshot.data()!);
-      },
-      toFirestore: (post, _) {
-        return post.toJson()..remove("id");
-      },
+    final postDoc = _firestore.postDocument(
+      documentPath: postPath(postId: post.id!),
     );
     await postDoc.update(post.toJson());
   }
