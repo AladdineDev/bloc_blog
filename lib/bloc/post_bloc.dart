@@ -23,12 +23,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       final post = event.post;
       await postRepository.createPost(post: post);
       emit(
-        state.copyWith(status: PostStatus.createdPostWithSuccess),
+        state.copyWith(status: PostStatus.successCreatingPost),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.createPostFailed,
+          status: PostStatus.errorCreatingPost,
           error: const UnknownException(),
         ),
       );
@@ -46,7 +46,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         postsStream,
         onData: (data) {
           return state.copyWith(
-            status: PostStatus.fetchedPostListWithSuccess,
+            status: PostStatus.successFetchingPostList,
             posts: data,
           );
         },
@@ -54,7 +54,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.fetchPostListFailed,
+          status: PostStatus.errorFetchingPostList,
           error: const UnknownException(),
         ),
       );
@@ -68,14 +68,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       final postStream = postRepository.getPost(postId: postId);
       return emit.forEach(postStream, onData: (post) {
         return state.copyWith(
-          status: PostStatus.fetchedPostWithSuccess,
+          status: PostStatus.successFetchingPost,
           post: post,
         );
       });
     } catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.fetchPostFailed,
+          status: PostStatus.errorFetchingPost,
           error: const UnknownException(),
         ),
       );
@@ -89,13 +89,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       await postRepository.updatePost(post: post);
       emit(
         state.copyWith(
-          status: PostStatus.updatedPostWithSuccess,
+          status: PostStatus.successUpdatingPost,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.updatePostFailed,
+          status: PostStatus.errorUpdatingPost,
           error: const UnknownException(),
         ),
       );

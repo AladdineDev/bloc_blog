@@ -27,7 +27,7 @@ class PostListScreen extends StatelessWidget {
         builder: (context, state) {
           return switch (state.status) {
             PostStatus.fetchingPostList => const Spinner.medium(),
-            PostStatus.fetchPostListFailed => Retry(
+            PostStatus.errorFetchingPostList => Retry(
                 errorMessage: state.error.message,
                 onPressed: () => context.postBloc.add(GetAllPosts()),
               ),

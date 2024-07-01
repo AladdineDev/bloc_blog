@@ -66,14 +66,14 @@ class _PostFormState extends State<PostForm> {
           BlocConsumer<PostBloc, PostState>(
             listener: (context, state) {
               switch (state.status) {
-                case PostStatus.createdPostWithSuccess:
+                case PostStatus.successCreatingPost:
                   _showSnackBar(context, 'New post created!');
                   return context.pop();
-                case PostStatus.updatedPostWithSuccess:
+                case PostStatus.successUpdatingPost:
                   _showSnackBar(context, 'Post updated!');
                   return context.pop();
-                case PostStatus.createPostFailed:
-                case PostStatus.updatePostFailed:
+                case PostStatus.errorCreatingPost:
+                case PostStatus.errorUpdatingPost:
                   return _showSnackBar(context, state.error.message);
                 default:
               }

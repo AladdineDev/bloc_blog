@@ -30,7 +30,7 @@ class PostDetailScreen extends StatelessWidget {
             appBar: _buildAppBar(),
             body: const Spinner.medium(),
           ),
-        PostStatus.fetchPostFailed => Scaffold(
+        PostStatus.errorFetchingPost => Scaffold(
             appBar: _buildAppBar(),
             body: Retry(
               errorMessage: state.error.message,

@@ -2,17 +2,17 @@ part of 'post_bloc.dart';
 
 enum PostStatus {
   creatingPost,
-  createdPostWithSuccess,
-  createPostFailed,
+  successCreatingPost,
+  errorCreatingPost,
   fetchingPostList,
-  fetchedPostListWithSuccess,
-  fetchPostListFailed,
+  successFetchingPostList,
+  errorFetchingPostList,
   fetchingPost,
-  fetchedPostWithSuccess,
-  fetchPostFailed,
+  successFetchingPost,
+  errorFetchingPost,
   updatingPost,
-  updatedPostWithSuccess,
-  updatePostFailed,
+  successUpdatingPost,
+  errorUpdatingPost,
 }
 
 class PostState extends Equatable {
