@@ -15,17 +15,17 @@ class PostRepository {
     }
   }
 
-  Future<List<Post>> getPosts() async {
+  Stream<List<Post>> getPosts() {
     try {
-      return await remoteDataSource.getPosts();
+      return remoteDataSource.getPosts();
     } catch (e) {
       throw const FetchPostListException();
     }
   }
 
-  Future<Post> getPost({required String postId}) async {
+  Stream<Post> getPost({required String postId}) {
     try {
-      return await remoteDataSource.getPost(postId: postId);
+      return remoteDataSource.getPost(postId: postId);
     } catch (e) {
       throw const FetchPostException();
     }

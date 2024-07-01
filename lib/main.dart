@@ -8,6 +8,7 @@ import 'package:bloc_blog/screens/page_not_found_screen.dart';
 import 'package:bloc_blog/screens/post_detail_screen.dart';
 import 'package:bloc_blog/screens/post_form_screen.dart';
 import 'package:bloc_blog/screens/post_list_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => PostRepository(
-        remoteDataSource: RemotePostDataSource(),
+        remoteDataSource: RemotePostDataSource(FirebaseFirestore.instance),
       ),
       child: BlocProvider(
         create: (context) => PostBloc(

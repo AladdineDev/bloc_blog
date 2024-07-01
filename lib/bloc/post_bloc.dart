@@ -35,18 +35,21 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Future<void> _onGetAllPosts(
+  void _onGetAllPosts(
     GetAllPosts event,
     Emitter<PostState> emit,
   ) async {
     emit(state.copyWith(status: PostStatus.fetchingPostList));
     try {
-      final posts = await postRepository.getPosts();
-      emit(
-        state.copyWith(
-          status: PostStatus.fetchedPostListWithSuccess,
-          posts: posts,
-        ),
+      final postsStream = postRepository.getPosts();
+      return emit.forEach(
+        postsStream,
+        onData: (data) {
+          return state.copyWith(
+            status: PostStatus.fetchedPostListWithSuccess,
+            posts: data,
+          );
+        },
       );
     } catch (e) {
       emit(
@@ -58,17 +61,18 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Future<void> _onGetOnePost(GetOnePost event, Emitter<PostState> emit) async {
+  Stream<void> _onGetOnePost(GetOnePost event, Emitter<PostState> emit) async* {
     emit(state.copyWith(status: PostStatus.fetchingPost));
     try {
       final postId = event.postId;
-      final post = await postRepository.getPost(postId: postId);
-      emit(
-        state.copyWith(
-          status: PostStatus.fetchedPostWithSuccess,
-          post: post,
-        ),
-      );
+      postRepository.getPost(postId: postId).listen((post) {
+        emit(
+          state.copyWith(
+            status: PostStatus.fetchedPostWithSuccess,
+            post: post,
+          ),
+        );
+      });
     } catch (e) {
       emit(
         state.copyWith(

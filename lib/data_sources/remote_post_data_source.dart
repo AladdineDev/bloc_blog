@@ -1,56 +1,67 @@
-import 'dart:math';
-
 import 'package:bloc_blog/data_sources/post_data_source.dart';
-import 'package:bloc_blog/exceptions/app_exception.dart';
 import 'package:bloc_blog/models/post.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RemotePostDataSource extends PostDataSource {
-  RemotePostDataSource() {
-    _generatePosts(50);
-  }
+  RemotePostDataSource(this._firestore);
 
-  final List<Post> _posts = [];
+  final FirebaseFirestore _firestore;
 
-  void _generatePosts([int length = 20]) {
-    final random = Random();
-    for (int i = 0; i < length; i++) {
-      final post = Post(
-        id: '$i',
-        title: 'Post $i',
-        description: 'Bla bla, Blablabla bla.' * (random.nextInt(10) + 1),
-      );
-      _posts.add(post);
-    }
-  }
+  static const postsPath = 'posts';
+  static String postPath({required String postId}) => '$postsPath/$postId';
 
   @override
   Future<void> createPost({required Post post}) async {
-    //TODO: remove delay
-    await Future.delayed(const Duration(milliseconds: 500));
-    _posts.add(post);
+    final rawPostsCollection = _firestore.collection(postsPath);
+    final postsCollection =
+        rawPostsCollection.withConverter(fromFirestore: (snapshot, _) {
+      return Post.fromJson(snapshot.id, snapshot.data()!);
+    }, toFirestore: (post, _) {
+      return post.toJson()..remove("id");
+    });
+    await postsCollection.add(post);
   }
 
   @override
-  Future<List<Post>> getPosts() async {
-    //TODO: remove delay
-    await Future.delayed(const Duration(milliseconds: 500));
-    return _posts;
+  Stream<List<Post>> getPosts() {
+    final rawPostsCollection = _firestore.collection(postsPath);
+    final postsCollection =
+        rawPostsCollection.withConverter(fromFirestore: (snapshot, _) {
+      return Post.fromJson(snapshot.id, snapshot.data()!);
+    }, toFirestore: (post, _) {
+      return post.toJson();
+    });
+    return postsCollection.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    });
   }
 
   @override
-  Future<Post> getPost({required String postId}) async {
-    //TODO: remove delay
-    await Future.delayed(const Duration(milliseconds: 500));
-    return _posts.firstWhere((post) => post.id == postId);
+  Stream<Post> getPost({required String postId}) {
+    final rawPostDoc = _firestore.doc(postPath(postId: postId));
+    final postDoc = rawPostDoc.withConverter(
+      fromFirestore: (snapshot, _) {
+        return Post.fromJson(snapshot.id, snapshot.data()!);
+      },
+      toFirestore: (post, _) {
+        return post.toJson();
+      },
+    );
+    return postDoc.snapshots().map((snapshot) => snapshot.data()!);
   }
 
   @override
   Future<void> updatePost({required Post post}) async {
-    //TODO: remove delay
-    await Future.delayed(const Duration(milliseconds: 500));
-    final postId = post.id;
-    if (postId == null) throw const UpdatePostException();
-    final index = _posts.indexWhere((p) => p.id == postId);
-    _posts[index] = post;
+    final postId = post.id!;
+    final rawPostDoc = _firestore.doc(postPath(postId: postId));
+    final postDoc = rawPostDoc.withConverter(
+      fromFirestore: (snapshot, _) {
+        return Post.fromJson(snapshot.id, snapshot.data()!);
+      },
+      toFirestore: (post, _) {
+        return post.toJson();
+      },
+    );
+    await postDoc.update(post.toJson());
   }
 }
