@@ -59,7 +59,7 @@ class RemotePostDataSource extends PostDataSource {
         return Post.fromJson(snapshot.id, snapshot.data()!);
       },
       toFirestore: (post, _) {
-        return post.toJson();
+        return post.toJson()..remove("id");
       },
     );
     await postDoc.update(post.toJson());
