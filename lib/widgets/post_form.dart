@@ -29,6 +29,13 @@ class _PostFormState extends State<PostForm> {
   }
 
   @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final post = widget.post;
     final autovalidateMode = _submitted
