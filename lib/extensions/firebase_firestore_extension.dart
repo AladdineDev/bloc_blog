@@ -17,11 +17,11 @@ extension FirebaseFirestoreExtension on FirebaseFirestore {
     final collectionRef = collection(collectionPath);
     return collectionRef.withConverter(
       fromFirestore: (snapshot, _) => fromJson(snapshot.id, snapshot.data()!),
-      toFirestore: (value, _) => toJson(value)..remove('id'),
+      toFirestore: (value, _) => toJson(value),
     );
   }
 
-  DocumentReference<R> documentWithConverter<R>({
+  DocumentReference<R> documentWithConverter<R extends Object?>({
     required String documentPath,
     required ModelFromFirestore<R> fromJson,
     required ModelToFirestore<R> toJson,
@@ -29,7 +29,7 @@ extension FirebaseFirestoreExtension on FirebaseFirestore {
     final docRef = doc(documentPath);
     return docRef.withConverter(
       fromFirestore: (snapshot, _) => fromJson(snapshot.id, snapshot.data()!),
-      toFirestore: (value, _) => toJson(value)..remove('id'),
+      toFirestore: (value, _) => toJson(value),
     );
   }
 }

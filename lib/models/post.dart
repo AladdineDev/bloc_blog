@@ -24,9 +24,9 @@ class Post extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson([bool keepId = false]) {
     return {
-      'id': id,
+      if (keepId) 'id': id,
       'title': title,
       'description': description,
     };

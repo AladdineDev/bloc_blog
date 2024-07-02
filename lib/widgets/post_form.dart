@@ -137,7 +137,6 @@ class _PostFormState extends State<PostForm> {
         return context.postBloc.add(CreatePost(post));
       }
       final updatedPost = post.copyWith(
-        id: post.id,
         title: title,
         description: description,
       );
