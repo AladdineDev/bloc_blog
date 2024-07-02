@@ -41,7 +41,7 @@ extension FirebaseFirestoreExtension on FirebaseFirestore {
 
 extension PostFirestoreExtension on FirebaseFirestore {
   CollectionReference<Post> postsCollection() {
-    return collectionWithConverter<Post>(
+    return collectionWithConverter(
       collectionPath: RemotePostDataSource.postsCollectionPath,
       fromJson: (json) => Post.fromJson(json),
       toJson: (post) => post.toJson(),
@@ -49,7 +49,7 @@ extension PostFirestoreExtension on FirebaseFirestore {
   }
 
   DocumentReference<Post> postDocument({required String documentPath}) {
-    return documentWithConverter<Post>(
+    return documentWithConverter(
       documentPath: documentPath,
       fromJson: (json) => Post.fromJson(json),
       toJson: (post) => post.toJson(),
