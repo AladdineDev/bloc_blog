@@ -25,6 +25,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(
         state.copyWith(status: PostStatus.successCreatingPost),
       );
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.errorCreatingPost,
+          error: e,
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(
@@ -51,6 +58,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           );
         },
       );
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.errorCreatingPost,
+          error: e,
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(
@@ -72,6 +86,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           post: post,
         );
       });
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.errorCreatingPost,
+          error: e,
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(
@@ -90,6 +111,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(
         state.copyWith(
           status: PostStatus.successUpdatingPost,
+        ),
+      );
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.errorCreatingPost,
+          error: e,
         ),
       );
     } catch (e) {
