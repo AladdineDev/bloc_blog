@@ -87,6 +87,11 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
+            filledButtonTheme: FilledButtonThemeData(
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(64, 48),
+              ),
+            ),
             inputDecorationTheme: const InputDecorationTheme(
               border: OutlineInputBorder(),
             ),

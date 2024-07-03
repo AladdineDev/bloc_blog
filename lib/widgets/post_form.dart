@@ -89,11 +89,11 @@ class _PostFormState extends State<PostForm> {
               return switch (state.status) {
                 PostStatus.progressCreatingPost ||
                 PostStatus.progressUpdatingPost =>
-                  const ElevatedButton(
+                  const FilledButton(
                     onPressed: null,
                     child: Spinner.small(),
                   ),
-                _ => ElevatedButton(
+                _ => FilledButton(
                     onPressed: () => _onSubmit(context),
                     child: Text(post == null ? 'Submit' : 'Save'),
                   )
