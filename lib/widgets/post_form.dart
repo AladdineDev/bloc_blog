@@ -87,8 +87,8 @@ class _PostFormState extends State<PostForm> {
             },
             builder: (context, state) {
               return switch (state.status) {
-                PostStatus.creatingPost ||
-                PostStatus.updatingPost =>
+                PostStatus.progressCreatingPost ||
+                PostStatus.progressUpdatingPost =>
                   const ElevatedButton(
                     onPressed: null,
                     child: Spinner.small(),

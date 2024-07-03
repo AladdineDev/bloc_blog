@@ -33,7 +33,7 @@ class PostDetailScreen extends StatelessWidget {
       builder: (context, state) {
         final post = state.post;
         return switch (state.status) {
-          PostStatus.fetchingPost => Scaffold(
+          PostStatus.progressFetchingPost => Scaffold(
               appBar: _buildAppBar(),
               body: const Spinner.medium(),
             ),

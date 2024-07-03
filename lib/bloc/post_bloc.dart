@@ -19,7 +19,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final PostRepository postRepository;
 
   Future<void> _onCreatePost(CreatePost event, Emitter<PostState> emit) async {
-    emit(state.copyWith(status: PostStatus.creatingPost));
+    emit(state.copyWith(status: PostStatus.progressCreatingPost));
     try {
       final post = event.post;
       await postRepository.createPost(post: post);
@@ -47,7 +47,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     GetAllPosts event,
     Emitter<PostState> emit,
   ) async {
-    emit(state.copyWith(status: PostStatus.fetchingPostList));
+    emit(state.copyWith(status: PostStatus.progressFetchingPostList));
     try {
       final postsStream = postRepository.getPosts();
       return emit.forEach(
@@ -77,7 +77,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<void> _onGetOnePost(GetOnePost event, Emitter<PostState> emit) async {
-    emit(state.copyWith(status: PostStatus.fetchingPost));
+    emit(state.copyWith(status: PostStatus.progressFetchingPost));
     try {
       final postId = event.postId;
       final postStream = postRepository.getPost(postId: postId);
@@ -111,7 +111,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<void> _onUpdatePost(UpdatePost event, Emitter<PostState> emit) async {
-    emit(state.copyWith(status: PostStatus.updatingPost));
+    emit(state.copyWith(status: PostStatus.progressUpdatingPost));
     try {
       final post = event.post;
       await postRepository.updatePost(post: post);
@@ -138,7 +138,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<void> _onDeletePost(DeletePost event, Emitter<PostState> emit) async {
-    emit(state.copyWith(status: PostStatus.deletingPost));
+    emit(state.copyWith(status: PostStatus.progressDeletingPost));
     try {
       final postId = event.postId;
       await postRepository.deletePost(postId: postId);
