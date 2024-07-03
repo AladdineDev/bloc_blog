@@ -36,6 +36,7 @@ class PostListScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'from-add-to-delete',
         icon: const Icon(Icons.post_add),
         label: const Text("New post"),
         onPressed: () => _onPostAddButtonTap(context),

@@ -75,7 +75,7 @@ class PostDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   FloatingActionButton.extended(
-                    heroTag: null,
+                    heroTag: 'from-add-to-delete',
                     icon: const Icon(Icons.delete_forever_outlined),
                     label: const Text("Delete post"),
                     onPressed: () => _onDeleteButtonPressed(context),
