@@ -46,3 +46,11 @@ class UpdatePostException extends AppException {
           'Post update has failed',
         );
 }
+
+class DeletePostException extends AppException {
+  const DeletePostException()
+      : super(
+          'delete-post-exception',
+          'Post deletion has failed',
+        );
+}

@@ -1,6 +1,7 @@
 part of 'post_bloc.dart';
 
 enum PostStatus {
+  initial,
   creatingPost,
   successCreatingPost,
   errorCreatingPost,
@@ -13,11 +14,14 @@ enum PostStatus {
   updatingPost,
   successUpdatingPost,
   errorUpdatingPost,
+  deletingPost,
+  successDeletingPost,
+  errorDeletingPost,
 }
 
 class PostState extends Equatable {
   const PostState({
-    this.status = PostStatus.fetchingPost,
+    this.status = PostStatus.initial,
     this.posts = const [],
     this.post,
     this.error = const UnknownException(),

@@ -9,7 +9,7 @@ class RemotePostDataSource extends PostDataSource {
   final FirebaseFirestore _firestore;
 
   static const postsCollectionPath = 'posts';
-  static String postPath({required String postId}) {
+  static String postPath({required PostId postId}) {
     return '$postsCollectionPath/$postId';
   }
 
@@ -28,11 +28,11 @@ class RemotePostDataSource extends PostDataSource {
   }
 
   @override
-  Stream<Post> getPost({required String postId}) {
+  Stream<Post?> getPost({required PostId postId}) {
     final postDoc = _firestore.postDocument(
       documentPath: postPath(postId: postId),
     );
-    return postDoc.snapshots().map((snapshot) => snapshot.data()!);
+    return postDoc.snapshots().map((snapshot) => snapshot.data());
   }
 
   @override
@@ -41,5 +41,13 @@ class RemotePostDataSource extends PostDataSource {
       documentPath: postPath(postId: post.id!),
     );
     await postDoc.update(post.toJson());
+  }
+
+  @override
+  Future<void> deletePost({required PostId postId}) async {
+    final postDoc = _firestore.postDocument(
+      documentPath: postPath(postId: postId),
+    );
+    await postDoc.delete();
   }
 }

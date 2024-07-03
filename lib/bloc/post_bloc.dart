@@ -13,6 +13,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<GetAllPosts>(_onGetAllPosts);
     on<GetOnePost>(_onGetOnePost);
     on<UpdatePost>(_onUpdatePost);
+    on<DeletePost>(_onDeletePost);
   }
 
   final PostRepository postRepository;
@@ -61,7 +62,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     } on AppException catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.errorCreatingPost,
+          status: PostStatus.errorFetchingPostList,
           error: e,
         ),
       );
@@ -81,6 +82,12 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       final postId = event.postId;
       final postStream = postRepository.getPost(postId: postId);
       return emit.forEach(postStream, onData: (post) {
+        if (post == null) {
+          return state.copyWith(
+            status: PostStatus.successDeletingPost,
+            post: null,
+          );
+        }
         return state.copyWith(
           status: PostStatus.successFetchingPost,
           post: post,
@@ -89,7 +96,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     } on AppException catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.errorCreatingPost,
+          status: PostStatus.errorFetchingPost,
           error: e,
         ),
       );
@@ -116,7 +123,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     } on AppException catch (e) {
       emit(
         state.copyWith(
-          status: PostStatus.errorCreatingPost,
+          status: PostStatus.errorUpdatingPost,
           error: e,
         ),
       );
@@ -124,6 +131,34 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(
         state.copyWith(
           status: PostStatus.errorUpdatingPost,
+          error: const UnknownException(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onDeletePost(DeletePost event, Emitter<PostState> emit) async {
+    emit(state.copyWith(status: PostStatus.deletingPost));
+    try {
+      final postId = event.postId;
+      await postRepository.deletePost(postId: postId);
+      emit(
+        state.copyWith(
+          status: PostStatus.successDeletingPost,
+          post: null,
+        ),
+      );
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.errorDeletingPost,
+          error: e,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: PostStatus.errorDeletingPost,
           error: const UnknownException(),
         ),
       );

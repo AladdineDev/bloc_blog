@@ -64,7 +64,10 @@ class MyApp extends StatelessWidget {
                 }
                 break;
             }
-            return MaterialPageRoute(builder: (context) => screen);
+            return MaterialPageRoute(
+              settings: settings,
+              builder: (context) => screen,
+            );
           },
           theme: ThemeData(
             listTileTheme: const ListTileThemeData(

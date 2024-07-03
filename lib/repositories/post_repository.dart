@@ -23,7 +23,7 @@ class PostRepository {
     }
   }
 
-  Stream<Post> getPost({required String postId}) {
+  Stream<Post?> getPost({required PostId postId}) {
     try {
       return remoteDataSource.getPost(postId: postId);
     } catch (e) {
@@ -36,6 +36,14 @@ class PostRepository {
       await remoteDataSource.updatePost(post: post);
     } catch (e) {
       throw const UpdatePostException();
+    }
+  }
+
+  Future<void> deletePost({required PostId postId}) async {
+    try {
+      await remoteDataSource.deletePost(postId: postId);
+    } catch (e) {
+      throw const DeletePostException();
     }
   }
 }

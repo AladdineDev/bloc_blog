@@ -21,3 +21,8 @@ final class UpdatePost extends PostEvent {
 
   final Post post;
 }
+
+class DeletePost extends PostEvent {
+  DeletePost(this.postId);
+  final PostId postId;
+}

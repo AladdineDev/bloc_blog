@@ -2,6 +2,7 @@ import 'package:bloc_blog/bloc/post_bloc.dart';
 import 'package:bloc_blog/extensions/build_context_extension.dart';
 import 'package:bloc_blog/models/post.dart';
 import 'package:bloc_blog/screens/page_not_found_screen.dart';
+import 'package:bloc_blog/screens/post_deletion_dialog.dart';
 import 'package:bloc_blog/screens/post_form_screen.dart';
 import 'package:bloc_blog/widgets/retry.dart';
 import 'package:bloc_blog/widgets/spinner.dart';
@@ -24,46 +25,67 @@ class PostDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostBloc, PostState>(builder: (context, state) {
-      return switch (state.status) {
-        PostStatus.fetchingPost => Scaffold(
-            appBar: _buildAppBar(),
-            body: const Spinner.medium(),
-          ),
-        PostStatus.errorFetchingPost => Scaffold(
-            appBar: _buildAppBar(),
-            body: Retry(
-              errorMessage: state.error.message,
-              onPressed: () => context.postBloc.add(GetOnePost(postId)),
+    return BlocConsumer<PostBloc, PostState>(
+      listener: (context, state) => _onDeletedPost(context),
+      listenWhen: (previous, current) {
+        return current.status == PostStatus.successDeletingPost;
+      },
+      builder: (context, state) {
+        final post = state.post;
+        return switch (state.status) {
+          PostStatus.fetchingPost => Scaffold(
+              appBar: _buildAppBar(),
+              body: const Spinner.medium(),
             ),
-          ),
-        _ => Scaffold(
-            appBar: _buildAppBar(),
-            body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+          PostStatus.errorFetchingPost => Scaffold(
+              appBar: _buildAppBar(),
+              body: Retry(
+                errorMessage: state.error.message,
+                onPressed: () => context.postBloc.add(GetOnePost(postId)),
+              ),
+            ),
+          _ => Scaffold(
+              appBar: _buildAppBar(),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      post?.title ?? 'No title',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      post?.description ?? 'No description',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              ),
+              floatingActionButton: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    state.post?.title ?? 'No title',
-                    style: Theme.of(context).textTheme.headlineLarge,
+                  FloatingActionButton.extended(
+                    heroTag: null,
+                    icon: const Icon(Icons.edit_outlined),
+                    label: const Text("Edit post"),
+                    onPressed: () => _onPostEditButtonTap(context, post: post),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    state.post?.description ?? 'No description',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  const SizedBox(height: 16),
+                  FloatingActionButton.extended(
+                    heroTag: null,
+                    icon: const Icon(Icons.delete_forever_outlined),
+                    label: const Text("Delete post"),
+                    onPressed: () => _onDeleteButtonPressed(context),
                   ),
                 ],
               ),
-            ),
-            floatingActionButton: FloatingActionButton.extended(
-              icon: const Icon(Icons.edit_outlined),
-              label: const Text("Edit post"),
-              onPressed: () => _onPostEditButtonTap(context, post: state.post),
-            ),
-          )
-      };
-    });
+            )
+        };
+      },
+    );
   }
 
   PreferredSizeWidget _buildAppBar() {
@@ -75,5 +97,27 @@ class PostDetailScreen extends StatelessWidget {
   void _onPostEditButtonTap(BuildContext context, {required Post? post}) {
     if (post == null) return PageNotFoundScreen.navigateTo(context);
     PostFormScreen.navigateTo(context, post: post);
+  }
+
+  void _onDeleteButtonPressed(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => PostDeletionDialog(postId: postId),
+    );
+  }
+
+  void _onDeletedPost(BuildContext context) {
+    if (ModalRoute.of(context)?.isActive == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "The post has been deleted",
+          ),
+        ),
+      );
+      Navigator.popUntil(context, (route) {
+        return ModalRoute.of(context)?.isActive != true;
+      });
+    }
   }
 }
