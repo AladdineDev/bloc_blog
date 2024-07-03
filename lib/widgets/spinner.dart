@@ -18,9 +18,9 @@ class Spinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox.square(
-        dimension: dimension,
+    return SizedBox.square(
+      dimension: dimension,
+      child: Center(
         child: CircularProgressIndicator(
           strokeWidth: strokeWidth,
         ),
