@@ -81,6 +81,9 @@ class MyApp extends StatelessWidget {
               radius: Radius.circular(16),
               thickness: WidgetStatePropertyAll(6),
             ),
+            snackBarTheme: const SnackBarThemeData(
+              showCloseIcon: true,
+            ),
           ),
         ),
       ),
