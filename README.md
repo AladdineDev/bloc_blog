@@ -39,4 +39,4 @@ flutter pub run
 
 ## License 📄
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/AladdineDev/portfolio/blob/main/LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/AladdineDev/bloc_blog/blob/main/LICENSE.md) file for details
