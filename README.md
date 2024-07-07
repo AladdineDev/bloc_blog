@@ -34,7 +34,7 @@ flutter pub get
 **3. Run the app:**
 
 ```bash
-flutter pub run
+flutter run
 ```
 
 ## License 📄
