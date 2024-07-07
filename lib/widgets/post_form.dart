@@ -120,7 +120,6 @@ class _PostFormState extends State<PostForm> {
   }
 
   void _showSnackBar(BuildContext context, String text) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(text),
