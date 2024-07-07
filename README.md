@@ -1,6 +1,6 @@
 <img src="assets/images/app-logo.png" align="right" width="60px"/>
 
-# Portfolio
+# Bloc Blog
 
 Bloc Blog – by [@AladdineDev](https://github.com/AladdineDev)
 
@@ -10,8 +10,8 @@ Bloc Blog – by [@AladdineDev](https://github.com/AladdineDev)
 
 ## Features ✨
 
-💙 [Bloc Architecture](https://bloclibrary.dev/architecture/)\
-💙 Firestore real-time pagination\
+💙 [Bloc](https://bloclibrary.dev) state management and architecture\
+💙 [Firestore](https://firebase.google.com/docs/firestore) real-time pagination\
 💙 Multi-platform (Android, iOS)
 
 ## Getting started 🚀
