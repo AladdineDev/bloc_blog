@@ -21,8 +21,8 @@ If you haven't already, install [Flutter](https://docs.flutter.dev/get-started/i
 **1. Clone this repository**
 
 ```bash
-$ git clone https://github.com/AladdineDev/bloc_blog
-$ cd bloc_blog
+git clone https://github.com/AladdineDev/bloc_blog
+cd bloc_blog
 ```
 
 **2. Install dependencies:**
