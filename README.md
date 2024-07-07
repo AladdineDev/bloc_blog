@@ -1,16 +1,42 @@
-# bloc_blog
+<img src="assets/images/app-logo.png" align="right" width="60px"/>
 
-A new Flutter project.
+# Portfolio
 
-## Getting Started
+Bloc Blog – by [@AladdineDev](https://github.com/AladdineDev)
 
-This project is a starting point for a Flutter application.
+[![Flutter 3](https://img.shields.io/badge/Flutter-3.22-02569b.svg?style=flat-square&logo=flutter&logoColor=13b9fd)](https://flutter.dev/)
+[![Dart 3](https://img.shields.io/badge/Dart-3.4-0175c2.svg?style=flat-square&logo=dart&logoColor=13b9fd)](https://dart.dev/)
+[![Firebase](https://img.shields.io/badge/Firebase--ffcc30.svg?style=flat-square&logo=firebase&logoColor=ffcc30)](https://firebase.google.com/)
 
-A few resources to get you started if this is your first Flutter project:
+## Features ✨
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+💙 [Bloc Architecture](https://bloclibrary.dev/architecture/)\
+💙 Firestore real-time pagination\
+💙 Multi-platform (Android, iOS)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Getting started 🚀
+
+If you haven't already, install [Flutter](https://docs.flutter.dev/get-started/install)
+
+**1. Clone this repository**
+
+```bash
+$ git clone https://github.com/AladdineDev/bloc_blog
+$ cd bloc_blog
+```
+
+**2. Install dependencies:**
+
+```bash
+flutter pub get
+```
+
+**3. Run the app:**
+
+```bash
+flutter pub run
+```
+
+## License 📄
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/AladdineDev/portfolio/blob/main/LICENSE.md) file for details
