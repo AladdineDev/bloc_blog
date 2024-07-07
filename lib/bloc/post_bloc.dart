@@ -48,8 +48,6 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     Emitter<PostState> emit,
   ) async {
     if (state.hasReachedMax) return;
-    if (state.status == PostStatus.progressFetchingMorePostList) return;
-    emit(state.copyWith(status: PostStatus.progressFetchingMorePostList));
     if (state.posts.length < event.limit) {
       emit(state.copyWith(hasReachedMax: true));
     }

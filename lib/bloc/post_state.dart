@@ -5,7 +5,6 @@ enum PostStatus {
   successCreatingPost,
   errorCreatingPost,
   progressFetchingPostList,
-  progressFetchingMorePostList,
   successFetchingPostList,
   errorFetchingPostList,
   progressFetchingPost,

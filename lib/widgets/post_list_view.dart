@@ -35,9 +35,7 @@ class _PostListViewState extends State<PostListView> {
 
   void _onScroll() {
     final posts = context.postBloc.state.posts;
-    if (_isBottom &&
-        posts.length >= _fetchLimit &&
-        context.postBloc.state.status != PostStatus.progressFetchingPostList) {
+    if (_isBottom && posts.length >= _fetchLimit) {
       _fetchLimit += _pageSize;
       context.postBloc.add(GetAllPosts(limit: _fetchLimit));
     }
@@ -68,29 +66,34 @@ class _PostListViewState extends State<PostListView> {
                   title: Spinner.medium(),
                 );
               }
-              return Card(
-                child: InkWell(
-                  onTap: () {
-                    _onPostListItemTap(context, post: state.posts[index]);
-                  },
-                  child: ListTile(
-                    title: Text(
-                      state.posts[index].title ?? "No title",
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        state.posts[index].description ?? "No description",
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
+              return Column(
+                children: [
+                  Text("${index + 1}"),
+                  Card(
+                    child: InkWell(
+                      onTap: () {
+                        _onPostListItemTap(context, post: state.posts[index]);
+                      },
+                      child: ListTile(
+                        title: Text(
+                          state.posts[index].title ?? "No title",
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            state.posts[index].description ?? "No description",
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               );
             },
           ),
