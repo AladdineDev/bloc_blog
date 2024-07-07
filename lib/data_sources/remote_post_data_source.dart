@@ -20,9 +20,10 @@ class RemotePostDataSource extends PostDataSource {
   }
 
   @override
-  Stream<List<Post>> getPosts() {
+  Stream<List<Post>> getPosts({required int limit}) {
     final postsCollection = _firestore.postsCollection();
-    return postsCollection.snapshots().map((snapshot) {
+    final postsQuery = postsCollection.limit(limit);
+    return postsQuery.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => doc.data()).toList();
     });
   }

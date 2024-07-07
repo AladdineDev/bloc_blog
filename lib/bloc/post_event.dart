@@ -2,12 +2,16 @@ part of 'post_bloc.dart';
 
 sealed class PostEvent {}
 
-final class GetAllPosts extends PostEvent {}
-
 final class GetOnePost extends PostEvent {
   GetOnePost(this.postId);
 
   final PostId postId;
+}
+
+final class GetAllPosts extends PostEvent {
+  GetAllPosts({this.limit = 20});
+
+  final int limit;
 }
 
 final class CreatePost extends PostEvent {

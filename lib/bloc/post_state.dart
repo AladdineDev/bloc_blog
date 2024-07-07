@@ -1,11 +1,11 @@
 part of 'post_bloc.dart';
 
 enum PostStatus {
-  initial,
   progressCreatingPost,
   successCreatingPost,
   errorCreatingPost,
   progressFetchingPostList,
+  progressFetchingMorePostList,
   successFetchingPostList,
   errorFetchingPostList,
   progressFetchingPost,
@@ -21,31 +21,35 @@ enum PostStatus {
 
 class PostState extends Equatable {
   const PostState({
-    this.status = PostStatus.initial,
-    this.posts = const [],
+    this.status = PostStatus.progressFetchingPostList,
     this.post,
+    this.posts = const [],
     this.error = const UnknownException(),
+    this.hasReachedMax = false,
   });
 
   final PostStatus status;
-  final List<Post> posts;
   final Post? post;
+  final List<Post> posts;
   final AppException error;
+  final bool hasReachedMax;
 
   PostState copyWith({
     PostStatus? status,
-    List<Post>? posts,
     Post? post,
+    List<Post>? posts,
     AppException? error,
+    bool? hasReachedMax,
   }) {
     return PostState(
       status: status ?? this.status,
       error: error ?? this.error,
-      posts: posts ?? this.posts,
       post: post ?? this.post,
+      posts: posts ?? this.posts,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
 
   @override
-  List<Object?> get props => [status, posts, post, error];
+  List<Object?> get props => [status, post, posts, error, hasReachedMax];
 }

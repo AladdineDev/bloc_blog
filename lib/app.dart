@@ -77,6 +77,10 @@ class MyApp extends StatelessWidget {
             inputDecorationTheme: const InputDecorationTheme(
               border: OutlineInputBorder(),
             ),
+            scrollbarTheme: const ScrollbarThemeData(
+              radius: Radius.circular(16),
+              thickness: WidgetStatePropertyAll(6),
+            ),
           ),
         ),
       ),
