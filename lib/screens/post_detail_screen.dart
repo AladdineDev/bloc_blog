@@ -2,8 +2,9 @@ import 'package:bloc_blog/bloc/post_bloc.dart';
 import 'package:bloc_blog/extensions/build_context_extension.dart';
 import 'package:bloc_blog/models/post.dart';
 import 'package:bloc_blog/screens/page_not_found_screen.dart';
-import 'package:bloc_blog/screens/post_deletion_dialog.dart';
+import 'package:bloc_blog/widgets/post_deletion_dialog.dart';
 import 'package:bloc_blog/screens/post_form_screen.dart';
+import 'package:bloc_blog/widgets/post_detail_app_bar.dart';
 import 'package:bloc_blog/widgets/retry.dart';
 import 'package:bloc_blog/widgets/spinner.dart';
 import 'package:flutter/material.dart';
@@ -33,21 +34,21 @@ class PostDetailScreen extends StatelessWidget {
       builder: (context, state) {
         final post = state.post;
         return switch (state.status) {
-          PostStatus.progressFetchingPost => Scaffold(
-              appBar: _buildAppBar(),
-              body: const Center(
+          PostStatus.progressFetchingPost => const Scaffold(
+              appBar: PostDetailAppBar(),
+              body: Center(
                 child: Spinner.medium(),
               ),
             ),
           PostStatus.errorFetchingPost => Scaffold(
-              appBar: _buildAppBar(),
+              appBar: const PostDetailAppBar(),
               body: Retry(
                 errorMessage: state.error.message,
                 onPressed: () => context.postBloc.add(GetOnePost(postId)),
               ),
             ),
           _ => Scaffold(
-              appBar: _buildAppBar(),
+              appBar: const PostDetailAppBar(),
               body: SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -87,12 +88,6 @@ class PostDetailScreen extends StatelessWidget {
             )
         };
       },
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      title: const Text('Post Detail'),
     );
   }
 
