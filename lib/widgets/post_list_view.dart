@@ -66,34 +66,29 @@ class _PostListViewState extends State<PostListView> {
                   title: Spinner.medium(),
                 );
               }
-              return Column(
-                children: [
-                  Text("${index + 1}"),
-                  Card(
-                    child: InkWell(
-                      onTap: () {
-                        _onPostListItemTap(context, post: state.posts[index]);
-                      },
-                      child: ListTile(
-                        title: Text(
-                          state.posts[index].title ?? "No title",
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Text(
-                            state.posts[index].description ?? "No description",
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+              return Card(
+                child: InkWell(
+                  onTap: () {
+                    _onPostListItemTap(context, post: state.posts[index]);
+                  },
+                  child: ListTile(
+                    title: Text(
+                      state.posts[index].title ?? "No title",
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        state.posts[index].description ?? "No description",
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
-                ],
+                ),
               );
             },
           ),
