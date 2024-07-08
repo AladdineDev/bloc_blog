@@ -52,6 +52,10 @@ class MyApp extends StatelessWidget {
             );
           },
           theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.purple,
+              tertiary: Colors.grey,
+            ),
             listTileTheme: const ListTileThemeData(
               titleTextStyle: TextStyle(
                 fontSize: 18,

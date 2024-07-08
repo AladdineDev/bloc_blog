@@ -3,6 +3,7 @@ import 'package:bloc_blog/extensions/build_context_extension.dart';
 import 'package:bloc_blog/models/post.dart';
 import 'package:bloc_blog/screens/page_not_found_screen.dart';
 import 'package:bloc_blog/screens/post_detail_screen.dart';
+import 'package:bloc_blog/widgets/post_list_placeholder.dart';
 import 'package:bloc_blog/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +53,7 @@ class _PostListViewState extends State<PostListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (context, state) {
+        if (state.posts.isEmpty) return const PostListPlaceholder();
         return Scrollbar(
           controller: _scrollController,
           child: ListView.builder(
